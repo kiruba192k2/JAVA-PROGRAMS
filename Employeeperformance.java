@@ -15,6 +15,8 @@ public class Employeeperformance {
         scores.add(78);
         scores.add(86);
         scores.add(70);
+        long count = scores.stream().filter(mark -> mark >= 80).count();
+        System.out.println(" No of Employees Eligible for Promotion with Score >= 80 is" + count);
         System.out.println("Employees Eligible for Promotion (Score >= 85):");
         scores.stream()
                 .filter(score -> score >= 85)
