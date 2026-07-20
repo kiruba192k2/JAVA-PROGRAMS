@@ -1,0 +1,8 @@
+******** EMPLOYEE DETAILS ********
+
+ID	NAME	DEPARTMENT	DESIGNATION	SALARY
+------------------------------------------------------------
+100	KIRUBA	Engineering	Software Engineer	45000.0
+101	JENNIE	Human Resources	Recruiter	350000.0
+102	YUVARAJ	Marketing	Marketing Manager	60000.0
+103	SRI	Finance	Finance Executive	30000.0
