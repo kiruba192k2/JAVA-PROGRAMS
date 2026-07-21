@@ -3,31 +3,7 @@ import java.io.*;
 import java.sql.*;
 import java.util.*;
 
-public class PayrollSystem {
-
-    static class Employee implements Comparable<Employee> {
-
-        int id;
-        String name;
-        String department;
-        String designation;
-        double salary;
-
-        Employee(int id, String name, String department,
-                String designation, double salary) {
-
-            this.id = id;
-            this.name = name;
-            this.department = department;
-            this.designation = designation;
-            this.salary = salary;
-        }
-
-        @Override
-        public int compareTo(Employee e) {
-            return this.name.compareToIgnoreCase(e.name);
-        }
-    }
+public class EmployeePayrollManagementSystem {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -359,86 +335,62 @@ public class PayrollSystem {
                         break;
                     case 6:
                         try {
-
-                            ArrayList<Employee> list = new ArrayList<>();
-
-                            Statement st2 = con.createStatement();
-                            ResultSet rs3 = st2.executeQuery("SELECT * FROM employee");
-
-                            while (rs3.next()) {
-                                list.add(new Employee(
-                                        rs3.getInt("empid"),
-                                        rs3.getString("empname"),
-                                        rs3.getString("department"),
-                                        rs3.getString("designation"),
-                                        rs3.getDouble("salary")));
-                            }
-
+                            System.out.println("Enter your choice: ");
                             System.out.println("1. Ascending");
                             System.out.println("2. Descending");
-                            System.out.print("Enter Choice : ");
-
                             int sortChoice = Integer.parseInt(sc.nextLine());
-
-                            Collections.sort(list);
-
-                            if (sortChoice == 2) {
-                                Collections.reverse(list);
+                            String sql;
+                            if (sortChoice == 1) {
+                                sql = "SELECT * FROM employee ORDER BY empname ASC";
+                            } else if (sortChoice == 2) {
+                                sql = "SELECT * FROM employee ORDER BY empname DESC";
+                            } else {
+                                System.out.println("Invalid Choice");
+                                break;
                             }
-
-                            for (Employee e : list) {
-
-                                System.out.println("--------------------------------");
-                                System.out.println("Employee ID : " + e.id);
-                                System.out.println("Employee Name : " + e.name);
-                                System.out.println("Department : " + e.department);
-                                System.out.println("Designation : " + e.designation);
-                                System.out.println("Salary : " + e.salary);
+                            Statement st2 = con.createStatement();
+                            ResultSet rs3 = st2.executeQuery(sql);
+                            System.out.println("----------------------------------------------------------");
+                            while (rs3.next()) {
+                                System.out.println("Employee ID : " + rs3.getInt("empid"));
+                                System.out.println("Employee Name : " + rs3.getString("empname"));
+                                System.out.println("Department : " + rs3.getString("department"));
+                                System.out.println("Designation : " + rs3.getString("designation"));
+                                System.out.println("Salary : " + rs3.getDouble("salary"));
+                                System.out.println("----------------------------------------------------------");
                             }
-
                         } catch (Exception e) {
-                            System.out.println("Sorting Error");
+                            System.out.println("Error sorting by Name.");
                         }
                         break;
-
                     case 7:
                         try {
-                            ArrayList<Employee> list = new ArrayList<>();
-
-                            Statement st4 = con.createStatement();
-                            ResultSet rs2 = st4.executeQuery("SELECT * FROM employee");
-
-                            while (rs2.next()) {
-                                list.add(new Employee(
-                                        rs2.getInt("empid"),
-                                        rs2.getString("empname"),
-                                        rs2.getString("department"),
-                                        rs2.getString("designation"),
-                                        rs2.getDouble("salary")));
-                            }
-
+                            System.out.println("Enter your choice to Sort: ");
                             System.out.println("1. Ascending");
                             System.out.println("2. Descending");
                             int sortChoice = Integer.parseInt(sc.nextLine());
-
-                            if (choice == 1) {
-                                Collections.sort(list, Comparator.comparingDouble(e -> e.salary));
-                            } else if (choice == 2) {
-                                Collections.sort(list, Comparator.comparingDouble(e -> e.salary));
-                                list.reversed();
+                            String sql;
+                            if (sortChoice == 1) {
+                                sql = "SELECT * FROM employee ORDER BY salary ASC";
+                            } else if (sortChoice == 2) {
+                                sql = "SELECT * FROM employee ORDER BY salary DESC";
+                            } else {
+                                System.out.println("Invalid Choice");
+                                break;
                             }
-
-                            for (Employee e : list) {
-                                System.out.println("--------------------------------");
-                                System.out.println("ID : " + e.id);
-                                System.out.println("Name : " + e.name);
-                                System.out.println("Department : " + e.department);
-                                System.out.println("Designation : " + e.designation);
-                                System.out.println("Salary : " + e.salary);
+                            Statement st1 = con.createStatement();
+                            ResultSet rs2 = st1.executeQuery(sql);
+                            System.out.println("--------------------------------------------------------------");
+                            while (rs2.next()) {
+                                System.out.println("Employee ID : " + rs2.getInt("empid"));
+                                System.out.println("Employee Name : " + rs2.getString("empname"));
+                                System.out.println("Department : " + rs2.getString("department"));
+                                System.out.println("Designation : " + rs2.getString("designation"));
+                                System.out.println("Salary : " + rs2.getDouble("salary"));
+                                System.out.println("--------------------------------------------------------------");
                             }
-
                         } catch (Exception e) {
-                            System.out.println("Sorting Error");
+                            System.out.println("Error sorting by salary.");
                         }
                         break;
                     case 8:
@@ -449,20 +401,39 @@ public class PayrollSystem {
                         fw.write("+--------------------------------------+\n");
                         fw.write("|         EMPLOYEE DETAILS             |\n");
                         fw.write("+--------------------------------------+\n");
-
                         while (rs4.next()) {
-                            fw.write("Employee ID : " + rs4.getInt("empid") + "\n");
-                            fw.write("Employee Name : " + rs4.getString("empname") + "\n");
-                            fw.write("Department : " + rs4.getString("department") + "\n");
-                            fw.write("Designation : " + rs4.getString("designation") + "\n");
-                            fw.write("Salary : " + rs4.getDouble("salary") + "\n");
-                            fw.write("----------------------------------------\n");
+                            while (rs4.next()) {
+                                fw.write("Employee ID : " + rs4.getInt("empid") + "\n");
+                                fw.write("Employee Name : " + rs4.getString("empname") + "\n");
+                                fw.write("Department : " + rs4.getString("department") + "\n");
+                                fw.write("Designation : " + rs4.getString("designation") + "\n");
+                                fw.write("Salary : " + rs4.getDouble("salary") + "\n");
+                                fw.write("----------------------------------------\n");
+                            }
                         }
-
                         fw.close();
                         System.out.println("Employee Details Exported Successfully");
                         break;
+
                     case 9:
+                        Statement st4 = con.createStatement();
+                        ResultSet rs7
+                                = st4.executeQuery("SELECT * FROM employee where salary >=30000");
+                        System.out.println();
+                        if (rs7.next()) {
+                            do {
+                                System.out.println("--------------------------------------");
+                                System.out.println("Employee ID      : " + rs7.getInt("empid"));
+                                System.out.println("Employee Name    : " + rs7.getString("empname"));
+                                System.out.println("Department       : " + rs7.getString("department"));
+                                System.out.println("Designation      : " + rs7.getString("designation"));
+                                System.out.println("Employee Salary  : " + rs7.getDouble("salary"));
+                            } while (rs7.next());
+                        } else {
+                            System.out.println("No Employees Found.");
+                        }
+                        break;
+                    case 10:
                         System.out.println("Thank You");
                         con.close();
                         sc.close();
