@@ -419,13 +419,15 @@ public class PayrollSystem {
 
                             System.out.println("1. Ascending");
                             System.out.println("2. Descending");
-                            int sortChoice = Integer.parseInt(sc.nextLine());
+                            int choiceforsort = Integer.parseInt(sc.nextLine());
+                            Collections.sort(list, Comparator.comparingDouble(e -> e.salary));
 
-                            if (choice == 1) {
-                                Collections.sort(list, Comparator.comparingDouble(e -> e.salary));
-                            } else if (choice == 2) {
-                                Collections.sort(list, Comparator.comparingDouble(e -> e.salary));
-                                list.reversed();
+                            if (choiceforsort == 1) {
+                                list = list;
+
+                            } else if (choiceforsort == 2) {
+                                Collections.reverse(list);
+
                             }
 
                             for (Employee e : list) {
