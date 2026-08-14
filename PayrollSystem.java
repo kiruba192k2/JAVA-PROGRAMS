@@ -46,8 +46,8 @@ public class PayrollSystem {
                 System.out.println("6. Sort by Name");
                 System.out.println("7. Sort by Salary");
                 System.out.println("8. Export to File");
-                System.out.println("9. View All Employees where salary >=30k");
-                System.out.println("10. Exit");
+
+                System.out.println("9. Exit");
                 System.out.print("Enter Choice : ");
                 int choice;
                 try {
@@ -420,12 +420,12 @@ public class PayrollSystem {
                             System.out.println("1. Ascending");
                             System.out.println("2. Descending");
                             int choiceforsort = Integer.parseInt(sc.nextLine());
-                            Collections.sort(list, Comparator.comparingDouble(e -> e.salary));
 
                             if (choiceforsort == 1) {
-                                list = list;
+                                Collections.sort(list, Comparator.comparingDouble(e -> e.salary));
 
                             } else if (choiceforsort == 2) {
+                                Collections.sort(list, Comparator.comparingDouble(e -> e.salary));
                                 Collections.reverse(list);
 
                             }
