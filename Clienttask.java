@@ -1,6 +1,9 @@
+
 import java.io.*;
 import java.net.*;
-public class Clienttask{
+
+public class Clienttask {
+
     public static void main(String[] args) {
         String serverAddress = "localhost";
         int port = 5000;
