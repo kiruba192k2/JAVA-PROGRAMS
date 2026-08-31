@@ -1,0 +1,6 @@
+Laptop,58000
+Mouse,1300
+Keyboard,2700
+Monitor,16000
+Printer,8800
+Headphones,3200

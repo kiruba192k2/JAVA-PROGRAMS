@@ -1,9 +1,0 @@
-{
-    "java.project.sourcePaths": [
-        "."
-    ],
-    "java.project.referencedLibraries": [
-        "lib\\mysql-connector-j-9.7.0.jar"
-    ],
-    "java.debug.settings.onBuildFailureProceed": true
-}
