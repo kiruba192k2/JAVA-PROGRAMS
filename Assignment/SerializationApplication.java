@@ -5,6 +5,8 @@ import java.lang.annotation.*;
 import java.lang.reflect.Field;
 import java.util.*;
 
+import EXAMPLE.Employee;
+
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 @interface Sensitive {

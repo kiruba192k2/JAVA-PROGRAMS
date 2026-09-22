@@ -18,8 +18,8 @@ class EmployeeStatusAnnotationDemo {
 public class EmployeeStatuswithAnnotation {
 
     public static void main(String[] args) {
-        Class<EmployeeStatusAnnotationDemo> employeeClass
-                = EmployeeStatusAnnotationDemo.class;
+        Class<EmployeeStatusAnnotation> employeeClass
+                = EmployeeStatusAnnotation.class;
         EmployeeStatusAnnotation status
                 = employeeClass.getAnnotation(EmployeeStatusAnnotation.class);
         System.out.println("Employee ID     : EMP1001");

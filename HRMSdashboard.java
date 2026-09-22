@@ -1,5 +1,4 @@
 
-
 import java.util.concurrent.*;
 
 class EmployeeProfileTask implements Callable<String> {
@@ -81,17 +80,17 @@ public class HRMSdashboard {
 
         ExecutorService executor = Executors.newFixedThreadPool(4);
 
-        Future<String> employeeFuture =
-                executor.submit(new EmployeeProfileTask());
+        Future<String> employeeFuture
+                = executor.submit(new EmployeeProfileTask());
 
-        Future<String> payrollFuture =
-                executor.submit(new PayrollReportTask());
+        Future<String> payrollFuture
+                = executor.submit(new PayrollReportTask());
 
-        Future<String> attendanceFuture =
-                executor.submit(new AttendanceReportTask());
+        Future<String> attendanceFuture
+                = executor.submit(new AttendanceReportTask());
 
-        Future<String> leaveFuture =
-                executor.submit(new LeaveReportTask());
+        Future<String> leaveFuture
+                = executor.submit(new LeaveReportTask());
 
         System.out.println("=========================================");
         System.out.println("      HRMS DASHBOARD REPORT SYSTEM");

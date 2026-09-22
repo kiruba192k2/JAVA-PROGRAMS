@@ -1,20 +1,26 @@
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
+
 public class EmployeePayrollSystem {
+
     static final String URL = "jdbc:mysql://localhost:3306/payroll_db";
     static final String USER = "root";
     static final String PASSWORD = "root";
     static Scanner sc = new Scanner(System.in);
+
     static class Employee implements Comparable<Employee> {
+
         private int empid;
         private String empname;
         private String department;
         private String designation;
         private double salary;
+
         public Employee(int empid, String empname, String department, String designation, double salary) {
             this.empid = empid;
             this.empname = empname;
@@ -22,33 +28,42 @@ public class EmployeePayrollSystem {
             this.designation = designation;
             this.salary = salary;
         }
+
         public int getEmpid() {
             return empid;
         }
+
         public String getEmpname() {
             return empname;
         }
+
         public String getDepartment() {
             return department;
         }
+
         public String getDesignation() {
             return designation;
         }
+
         public double getSalary() {
             return salary;
         }
+
         @Override
         public int compareTo(Employee other) {
             return this.empname.compareToIgnoreCase(other.empname);
         }
+
         @Override
         public String toString() {
-            return String.format( "%-8d %-20s %-15s %-20s %.2f", empid, empname, department, designation, salary );
+            return String.format("%-8d %-20s %-15s %-20s %.2f", empid, empname, department, designation, salary);
         }
     }
+
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
+
     public static void registerEmployee() {
         int empid;
         while (true) {
@@ -101,8 +116,8 @@ public class EmployeePayrollSystem {
             }
         }
         Employee employee = new Employee(empid, empname, department, designation, salary);
-        String sql = "INSERT INTO employee " + "(empid, empname, department, designation, salary) " +"VALUES (?, ?, ?, ?, ?)";
-        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql) ) {
+        String sql = "INSERT INTO employee " + "(empid, empname, department, designation, salary) " + "VALUES (?, ?, ?, ?, ?)";
+        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, employee.getEmpid());
             ps.setString(2, employee.getEmpname());
             ps.setString(3, employee.getDepartment());
@@ -116,10 +131,11 @@ public class EmployeePayrollSystem {
             System.out.println("Database Error: " + e.getMessage());
         }
     }
+
     public static ArrayList<Employee> getAllEmployees() {
         ArrayList<Employee> employees = new ArrayList<>();
         String sql = "SELECT * FROM employee";
-        try (Connection con = getConnection();PreparedStatement ps = con.prepareStatement(sql);ResultSet rs = ps.executeQuery()) {
+        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Employee employee = new Employee(
                         rs.getInt("empid"),
@@ -134,10 +150,12 @@ public class EmployeePayrollSystem {
         }
         return employees;
     }
+
     public static void viewAllEmployees() {
         ArrayList<Employee> employees = getAllEmployees();
         displayEmployees(employees);
     }
+
     public static void displayEmployees(ArrayList<Employee> employees) {
         if (employees.isEmpty()) {
             System.out.println("No Employee Records Found.");
@@ -151,10 +169,11 @@ public class EmployeePayrollSystem {
         }
         System.out.println("-----------------------------------------------------------------------");
     }
+
     public static void searchEmployee() {
         int empid = getInt("Enter Employee ID: ");
         String sql = "SELECT * FROM employee WHERE empid = ?";
-        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql) ) {
+        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, empid);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -171,6 +190,7 @@ public class EmployeePayrollSystem {
             System.out.println("Database Error: " + e.getMessage());
         }
     }
+
     public static void updateSalary() {
         int empid = getInt("Enter Employee ID: ");
         double salary;
@@ -183,7 +203,7 @@ public class EmployeePayrollSystem {
             }
         }
         String sql = "UPDATE employee SET salary = ? WHERE empid = ?";
-        try ( Connection con = getConnection();  PreparedStatement ps = con.prepareStatement(sql) ) {
+        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setDouble(1, salary);
             ps.setInt(2, empid);
             int rows = ps.executeUpdate();
@@ -196,6 +216,7 @@ public class EmployeePayrollSystem {
             System.out.println("Database Error: " + e.getMessage());
         }
     }
+
     public static void deleteEmployee() {
         int empid = getInt("Enter Employee ID: ");
         System.out.print("Are you sure (Y/N)? ");
@@ -217,24 +238,27 @@ public class EmployeePayrollSystem {
             System.out.println("Delete Operation Cancelled.");
         }
     }
+
     public static void sortByName() {
         ArrayList<Employee> employees = getAllEmployees();
         employees.sort(null);
         System.out.println("\nEmployees Sorted by Name:");
         displayEmployees(employees);
     }
+
     public static void sortBySalary() {
         ArrayList<Employee> employees = getAllEmployees();
         employees.sort(Comparator.comparingDouble(Employee::getSalary).reversed());
         System.out.println("\nEmployees Sorted by Salary Descending:");
         displayEmployees(employees);
     }
+
     public static void exportToFile() {
         ArrayList<Employee> employees = getAllEmployees();
         try (FileWriter writer = new FileWriter("employeedetails.txt")) {
             writer.write("EMPLOYEE PAYROLL DETAILS\n");
             writer.write("-----------------------------------------------------------------------\n");
-            writer.write( String.format(  "%-8s %-20s %-15s %-20s %-10s%n","ID", "NAME", "DEPARTMENT", "DESIGNATION", "SALARY" ));
+            writer.write(String.format("%-8s %-20s %-15s %-20s %-10s%n", "ID", "NAME", "DEPARTMENT", "DESIGNATION", "SALARY"));
             writer.write("-----------------------------------------------------------------------\n");
             for (Employee employee : employees) {
                 writer.write(employee.toString());
@@ -245,6 +269,7 @@ public class EmployeePayrollSystem {
             System.out.println("File Error: " + e.getMessage());
         }
     }
+
     public static int getInt(String message) {
         while (true) {
             try {
@@ -255,6 +280,7 @@ public class EmployeePayrollSystem {
             }
         }
     }
+
     public static double getDouble(String message) {
         while (true) {
             try {
@@ -265,6 +291,7 @@ public class EmployeePayrollSystem {
             }
         }
     }
+
     public static void main(String[] args) {
         while (true) {
             System.out.println("\n========================================");

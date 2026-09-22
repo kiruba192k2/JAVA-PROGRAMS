@@ -1,40 +1,41 @@
-interface SalaryCalculation
-{
+
+interface SalaryCalculation {
+
     double calculateSalary();
 }
-class PermanentSalary implements SalaryCalculation
-{
-    public double calculateSalary()
-    {
+
+class PermanentSalary implements SalaryCalculation {
+
+    public double calculateSalary() {
         return 50000;
     }
 }
-class ContractSalary implements SalaryCalculation
-{
-    public double calculateSalary()
-    {
+
+class ContractSalary implements SalaryCalculation {
+
+    public double calculateSalary() {
         return 30000;
     }
 }
-class EmployeeSalaryProcessor
-{
+
+class EmployeeSalaryProcessor {
+
     private SalaryCalculation strategy;
-    public EmployeeSalaryProcessor(SalaryCalculation strategy)
-    {
+
+    public EmployeeSalaryProcessor(SalaryCalculation strategy) {
         this.strategy = strategy;
     }
-    public void processSalary()
-    {
+
+    public void processSalary() {
         System.out.println("Salary : " + strategy.calculateSalary());
     }
 }
-public class HRMSSalaryStrategyDemo
-{
-    public static void main(String[] args)
-    {
+
+public class HRMSSalaryStrategyDemo {
+
+    public static void main(String[] args) {
         SalaryCalculation strategy = new PermanentSalary();
-        EmployeeSalaryProcessor processor =new EmployeeSalaryProcessor(strategy);
+        EmployeeSalaryProcessor processor = new EmployeeSalaryProcessor(strategy);
         processor.processSalary();
     }
 }
-

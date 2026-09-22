@@ -1,3 +1,4 @@
+package EXAMPLE;
 
 import java.awt.*;
 import java.io.*;

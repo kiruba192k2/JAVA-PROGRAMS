@@ -1,7 +1,9 @@
 
 import java.io.*;
 import java.net.*;
+
 public class Twowaychatserver {
+
     public static void main(String[] args) throws Exception {
         ServerSocket server = new ServerSocket(5000);
         System.out.println("==============================");
@@ -14,7 +16,7 @@ public class Twowaychatserver {
         System.out.println("Employee Connected Successfully!");
         System.out.println("--------------------------------");
         BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        PrintWriter output = new PrintWriter( socket.getOutputStream(), true);
+        PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
         BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
         Thread receiveThread = new Thread(() -> {
             try {
